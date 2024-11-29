@@ -46,7 +46,7 @@ app.all('/player/login/dashboard', function (req, res) {
     } catch (error) {
         console.log(`Warning: ${error}`);
     }
-    const formattedData = cv_json(tData).toStrin('base64');
+    const formattedData = cv_json(tData).toString('base64');
     res.render(__dirname + '/public/html/dashboard.ejs', { data: formattedData });
 });
 
