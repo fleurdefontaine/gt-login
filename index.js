@@ -46,7 +46,7 @@ app.all('/player/login/dashboard', function (req, res) {
     } catch (error) {
         console.log(`Warning: ${error}`);
     }
-    const formattedData = cv_json(tData).toString('base64');
+    const formattedData = cv_json(tData);
     res.render(__dirname + '/public/html/dashboard.ejs', { data: formattedData });
 });
 
@@ -55,8 +55,10 @@ app.all('/player/growid/login/validate', (req, res) => {
     const growId = req.body.growId;
     const password = req.body.password;
 
+    const token_b64 = Buffer.from(_token).toString('base64');
+
     const token = Buffer.from(
-        `_token=${_token}&growId=${growId}&password=${password}`,
+        `_token=${token_b64}&growId=${growId}&password=${password}`,
     ).toString('base64');
 
     res.send(
