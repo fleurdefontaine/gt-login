@@ -5,8 +5,7 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "node index.js",
-        "dev": "nodemon index.js"
+        "start": "node index.js"
     },
     "repository": {
         "type": "git",
@@ -23,7 +22,6 @@
         "compression": "^1.7.5",
         "ejs": "^3.1.10",
         "express": "^4.19.2",
-        "express-rate-limit": "^7.4.0",
-        "nodemon": "^3.1.7"
+        "express-rate-limit": "^7.4.0"
     }
 }

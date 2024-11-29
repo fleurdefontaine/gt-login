@@ -37,32 +37,17 @@ app.use(rateLimiter({ windowMs: 15 * 60 * 1000, max: 100, headers: true }));
 
 app.all('/player/login/dashboard', function (req, res) {
     const tData = {};
-
     try {
-        if (!req.body || typeof req.body !== 'object') {
-            return res.status(400).send('Invalid request body');
-        }
-
         const uData = JSON.stringify(req.body).split('"')[1].split('\\n');
-        const [uName, uPass] = [uData[0].split('|'), uData[1].split('|')];
-
-        uData.forEach(line => {
-            const [key, value] = line.split('|');
-            tData[key] = value;
-        });
-
-        if (tData._token) {
-            tData._token = cv_json(JSON.parse(tData._token));
-        }
-
-        if (uName[1] && uPass[1]) {
-            return res.redirect('/player/growid/login/validate');
+        for (let i = 0; i < uData.length - 1; i++) {
+            const d = uData[i].split('|');
+            tData[d[0]] = d[1];
         }
     } catch (error) {
-        console.error(`Error processing login request: ${error.message}`);
+        console.log(`Warning: ${error}`);
     }
-
-    res.render(__dirname + '/public/html/dashboard.ejs', { data: tData });
+    const formattedData = cv_json(tData).toStrin('base64');
+    res.render(__dirname + '/public/html/dashboard.ejs', { data: formattedData });
 });
 
 app.all('/player/growid/login/validate', (req, res) => {
